@@ -57,7 +57,7 @@ def get_records(page_content):
     for ii in range(len(records)):
         link = h3[ii].find('a')['href']
         title = h3[ii].find('a').text
-        print(f"title : {ii} {title}")
+        print(f"{ii} : {title}")
 
         para = postinfometa[ii].find_all('p')
         n_para = len(para)
@@ -78,6 +78,11 @@ def get_records(page_content):
                 comments = para[4].text
             arxiv_id = arxiv.find('a').text
 
+            # get instruments
+            postinfocats[ii].text.split('\n')
+            categories_list = [val.replace(' ', '') for
+                               val in postinfocats[2].text.split('\n') if val]
+            categories = ';'.join(categories_list)
             urls = arxiv.find_all('a')
             abs_url = urls[0]['href']
             pdf_url = urls[1]['href']
@@ -92,12 +97,14 @@ def get_records(page_content):
             'link': link,
             'title': title,
             'authors': authors,
-            'affil': affil
+            'affil': affil,
+            'abstract': abstract[ii].text.replace('\n', '')
         }
 
         # This handles discussion cases
         if n_para > 3:
             records_dict[arxiv_id].update({
+                'categories': categories,
                 'abs_url': abs_url,
                 'pdf_url': pdf_url,
                 'ps_url': ps_url,
