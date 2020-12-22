@@ -10,7 +10,7 @@ def import_data(filename):
 
     :param filename: str. Full path to MHTML
 
-    :return content:
+    :return content: str
     """
 
     with open(filename, 'r') as f:
@@ -21,13 +21,25 @@ def import_data(filename):
 
 
 def soup_it(content):
+    """
+    Construct BeautifulSoup data structure
 
+    :param content: str (from import_data
+    :return page_content: BeautifulSoup4 data structure object
+    """
     page_content = BeautifulSoup(content, "html.parser")
 
     return page_content
 
 
 def get_records(page_content):
+    """
+    Retrieve records
+
+    :param page_content: BeautifulSoup4 data structure object
+    :return records_dict: dict containing records with keys in keys hierarchy
+    """
+
     records = page_content.find_all('span', {'id': re.compile('votecount*')})
     n_records = len(records)
     print(f"Number of records: {n_records}")
