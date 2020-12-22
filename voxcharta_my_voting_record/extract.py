@@ -49,7 +49,7 @@ class Extract:
         self.log.info("Initializing ...")
         self.content = self.import_data()
 
-        self.log.info("initialization complete")
+        self.log.info("Initialization complete.")
 
     def import_data(self):
         """Import data"""
