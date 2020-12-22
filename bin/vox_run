@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+from os.path import join, dirname, splitext
+import argparse
+
+from voxcharta_my_voting_record.logger import LogClass
+from voxcharta_my_voting_record import extract
+from voxcharta_my_voting_record import __version__
+
+from datetime import date
+today = date.today()
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description='Main command-line driver For VoxCharta-My-Voting-Record.')
+    parser.add_argument('-f', '--filename', required=True,
+                        help='Full path of VoxCharta My Voting Record HTML')
+    parser.add_argument('-j', '--json_outfile',
+                        help='Full path of JSON output (optional)')
+    parser.add_argument('-c', '--csv_outfile',
+                        help='Full path of CSV output (optional)')
+    args = parser.parse_args()
+    vargs = vars(args)
+
+    main_dir = dirname(vargs['filename'])
+
+    log_outfile = join(main_dir, f"vox_run.{today.strftime('%Y-%m-%d')}.log")
+    log = LogClass(log_outfile).get_logger()
+
+    log.info("********************")
+    log.info("Starting vox_run ...")
+    log.info(f"Version: {__version__}")
+    log.info(f"Logs are stored in : {log_outfile}")
+
+    file_prefix = splitext(vargs['filename'])[0]
+    if not vargs['json_outfile']:
+        vargs['json_outfile'] = f"{file_prefix}.json"
+
+    if not vargs['csv_outfile']:
+        vargs['csv_outfile'] = f"{file_prefix}.csv"
+
+    vox_extract = extract.Extract(**vargs, log=log)
+
+    # BeautifulSoup it
+    soup = vox_extract.soup_it()
+
+    # Get records
+    records_dict = vox_extract.get_records(soup)
+
+    # Write files
+    vox_extract.export_data(records_dict)
+
+    log.info("Finished vox_run!")
+    log.info("*****************")
