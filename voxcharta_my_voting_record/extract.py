@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import json
 import pandas as pd
 
+from .logger import log_stdout
+
 
 class Extract:
     """
@@ -13,12 +15,11 @@ class Extract:
     :param filename: str. Full path to MHTML
     :param json_outfile: str for JSON output file
     :param csv_outfile: str for CSV output file
+    :param log: LogClass or logging object. Default uses log_stdout()
 
     Attributes
     ----------
     content: str (from import_data)
-    page_content: BeautifulSoup4 data structure object (from soup_it)
-    records_dict: dict (nested) containing records (from get_records)
 
     Methods
     -------
@@ -26,60 +27,67 @@ class Extract:
       Import data
 
     soup_it()
-      Construct BeautifulSoup data structure
+      Construct BeautifulSoup data structure -> page_content
 
-    get_records()
-      Retrieve records
+    get_records(page_content)
+      Retrieve records -> records_dict
 
-    export_data()
+    export_data(records_dict)
       Write JSON and csv files
     """
 
-    def __init__(self, filename, json_outfile, csv_outfile):
+    def __init__(self, filename, json_outfile, csv_outfile, log=None):
 
+        if log is None:
+            log = log_stdout()
+
+        self.log = log
         self.filename = filename
         self.json_outfile = json_outfile
         self.csv_outfile = csv_outfile
 
+        self.log.info("Initializing ...")
         self.content = self.import_data()
+
+        self.log.info("Initialization complete.")
 
     def import_data(self):
         """Import data"""
 
-        print("Importing data ...")
-        print(f"Reading: {self.filename}")
+        self.log.info("Importing data ...")
+        self.log.info(f"Reading: {self.filename}")
         with open(self.filename, 'r') as f:
             content = f.read()
         f.close()
 
-        print("finished ...")
+        self.log.info("Finished.")
         return content
 
     def soup_it(self):
         """Construct BeautifulSoup data structure"""
 
-        print("BeautifulSoup-ing data ...")
+        self.log.info("BeautifulSoup-ing data ...")
 
         page_content = BeautifulSoup(self.content, "html.parser")
 
-        print("finished ...")
+        self.log.info("Finished.")
         return page_content
 
-    def get_records(self):
+    def get_records(self, page_content):
         """Retrieve records"""
 
-        print("Retrieving records ...")
+        self.log.info("Retrieving records ...")
 
-        records = self.page_content.find_all('span', {'id': re.compile('votecount*')})
+        records = page_content.find_all('span', {'id': re.compile('votecount*')})
         n_records = len(records)
-        print(f"Number of records: {n_records}")
+        self.log.info(f"Number of records: {n_records}")
 
         # Note this is larger than [records] because of extra h3 heading at footer
-        h3 = self.page_content.find_all('h3')
+        h3 = page_content.find_all('h3')
 
-        postinfometa = self.page_content.find_all('span', {'class': 'postinfometa'})
-        postinfocats = self.page_content.find_all('span', {'class': 'postinfocats'})
-        abstract = self.page_content.find_all('div', {'class': 'post-content clearfix'})
+        postinfometa = page_content.find_all('span', {'class': 'postinfometa'})
+        postinfocats = page_content.find_all('span', {'class': 'postinfocats'})
+        abstract = page_content.find_all('div', {'class': 'post-content clearfix'})
 
         # Get VoxCharta links, titles
         records_dict = dict()
@@ -87,7 +95,7 @@ class Extract:
         for ii in range(len(records)):
             link = h3[ii].find('a')['href']
             title = h3[ii].find('a').text
-            print(f"{ii} : {title}")
+            self.log.info(f"{ii} : {title}")
 
             para = postinfometa[ii].find_all('p')
             n_para = len(para)
@@ -145,20 +153,20 @@ class Extract:
                     'comments': comments
                 })
 
-        print("finished ...")
+        self.log.info("Finished.")
         return records_dict
 
-    def export_data(self):
+    def export_data(self, records_dict):
         """Write JSON and csv files"""
 
-        print("Exporting data files ...")
+        self.log.info("Exporting data files ...")
 
-        print(f"Writing: {self.json_outfile}")
+        self.log.info(f"Writing: {self.json_outfile}")
         with open(self.json_outfile, 'w') as outfile:
-            json.dump(self.records_dict, outfile)
+            json.dump(records_dict, outfile)
 
-        df = pd.DataFrame.from_dict(self.records_dict, orient='index')
-        print(f"Writing: {self.csv_outfile}")
+        df = pd.DataFrame.from_dict(records_dict, orient='index')
+        self.log.info(f"Writing: {self.csv_outfile}")
         df.to_csv(self.csv_outfile)
 
-        print("finished ...")
+        self.log.info("Finished.")
