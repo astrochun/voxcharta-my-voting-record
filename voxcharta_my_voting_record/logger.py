@@ -3,7 +3,7 @@ from os.path import join
 
 import logging
 formatter = logging.Formatter('%(asctime)s - %(levelname)8s: %(message)s', "%H:%M:%S")
-file_formatter = logging.Formatter('%(asctime)s %(levelname)8s - %(module)18s %(funcName)30s - : %(message)s',
+file_formatter = logging.Formatter('%(asctime)s %(levelname)8s - %(module)10s %(funcName)15s : %(message)s',
                                    "%H:%M:%S")
 
 
