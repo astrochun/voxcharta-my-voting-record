@@ -106,6 +106,16 @@ class Extract:
             except AttributeError:
                 affil = ''  # No affiliation
 
+            arxiv_id = ''
+            categories = ''
+            abs_url = ''
+            pdf_url = ''
+            ps_url = ''
+            ads_url = ''
+            papers_url = ''
+            others_url = ''
+            comments = ''
+
             # This handles discussion cases
             if n_para > 3:
                 # This handles footnote for "Listed affiliation ..."
@@ -129,8 +139,6 @@ class Extract:
                 ads_url = urls[3]['href']
                 papers_url = urls[4]['href']
                 others_url = urls[5]['href']
-            else:
-                arxiv_id = ''
 
             records_dict[ii] = {
                 'arxiv_id': arxiv_id,
@@ -138,21 +146,16 @@ class Extract:
                 'title': title,
                 'authors': authors,
                 'affil': affil,
-                'abstract': abstract[ii].text.replace('\n', '')
+                'abstract': abstract[ii].text.replace('\n', ''),
+                'categories': categories,
+                'abs_url': abs_url,
+                'pdf_url': pdf_url,
+                'ps_url': ps_url,
+                'ads_url': ads_url,
+                'papers_url': papers_url,
+                'others_url': others_url,
+                'comments': comments
             }
-
-            # This handles discussion cases
-            if n_para > 3:
-                records_dict[ii].update({
-                    'categories': categories,
-                    'abs_url': abs_url,
-                    'pdf_url': pdf_url,
-                    'ps_url': ps_url,
-                    'ads_url': ads_url,
-                    'papers_url': papers_url,
-                    'others_url': others_url,
-                    'comments': comments
-                })
 
         self.log.info("Finished.")
         return records_dict
