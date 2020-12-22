@@ -4,6 +4,7 @@
 - [Getting Started](#getting-started)
     - [Requirements](#requirements)
     - [Installation Instructions](#installation-instructions)
+- [Execution](#execution)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -58,6 +59,24 @@ $ conda activate voxcharta
 $ (sudo) pip install voxcharta-my-voting-record
 ```
 
+## Execution
+
+The primary script to execute is [`vox_run`](bin/vox_run)
+
+Execution requires only one argument, `filename`, which is the the full path
+to the HTML file.
+
+```
+$ vox_run --filename /full/path/to/myvotingrecords.htm
+```
+
+All contents are stored in `/full/path/to`. Unless `--json_outfile` and
+`--csv_outfile` are provided, the output files are:
+
+ - JSON: `/full/path/to/myvotingrecords.json`
+ - CSV: `/full/path/to/myvotingrecords.csv`
+
+A log file is constructed: `/full/path/too/vox_run.YYYY-MM-DD.log`
 
 ## Versioning
 
