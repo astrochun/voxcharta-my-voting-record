@@ -142,7 +142,7 @@ class Extract:
 
             # This handles discussion cases
             if n_para > 3:
-                records_dict[arxiv_id].update({
+                records_dict[ii].update({
                     'categories': categories,
                     'abs_url': abs_url,
                     'pdf_url': pdf_url,
