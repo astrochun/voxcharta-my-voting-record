@@ -14,11 +14,11 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
         description='Main command-line driver For VoxCharta-My-Voting-Record.')
-    parser.add_argument('--filename', required=True,
+    parser.add_argument('-f', '--filename', required=True,
                         help='Full path of VoxCharta My Voting Record HTML')
-    parser.add_argument('--json_outfile',
+    parser.add_argument('-j', '--json_outfile',
                         help='Full path of JSON output (optional)')
-    parser.add_argument('--csv_outfile',
+    parser.add_argument('-c', '--csv_outfile',
                         help='Full path of CSV output (optional)')
     args = parser.parse_args()
     vargs = vars(args)

@@ -63,11 +63,11 @@ $ (sudo) pip install voxcharta-my-voting-record
 
 The primary script to execute is [`vox_run`](bin/vox_run)
 
-Execution requires only one argument, `filename`, which is the the full path
-to the HTML file.
+Execution requires only one argument, which is the the full path
+to the HTML file. It can be provided with `-f` or `--filename`
 
 ```
-$ vox_run --filename /full/path/to/myvotingrecords.htm
+$ vox_run -f /full/path/to/myvotingrecords.htm
 ```
 
 All contents are stored in `/full/path/to`. Unless `--json_outfile` and
