@@ -1,5 +1,9 @@
 # voxcharta-my-voting-record
 
+![GitHub top language](https://img.shields.io/github/languages/top/astrochun/voxcharta-my-voting-record)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/astrochun/voxcharta-my-voting-record)
+![GitHub](https://img.shields.io/github/license/astrochun/voxcharta-my-voting-record?color=blue)
+
 - [Overview](#overview)
 - [Getting Started](#getting-started)
     - [Requirements](#requirements)
