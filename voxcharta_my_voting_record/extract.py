@@ -19,8 +19,6 @@ class Extract:
     Attributes
     ----------
     content: str (from import_data)
-    page_content: BeautifulSoup4 data structure object (from soup_it)
-    records_dict: dict (nested) containing records (from get_records)
 
     Methods
     -------
@@ -28,12 +26,12 @@ class Extract:
       Import data
 
     soup_it()
-      Construct BeautifulSoup data structure
+      Construct BeautifulSoup data structure -> page_content
 
-    get_records()
-      Retrieve records
+    get_records(page_content)
+      Retrieve records -> records_dict
 
-    export_data()
+    export_data(records_dict)
       Write JSON and csv files
     """
 
@@ -71,21 +69,21 @@ class Extract:
         self.log.info("finished ...")
         return page_content
 
-    def get_records(self):
+    def get_records(self, page_content):
         """Retrieve records"""
 
         self.log.info("Retrieving records ...")
 
-        records = self.page_content.find_all('span', {'id': re.compile('votecount*')})
+        records = page_content.find_all('span', {'id': re.compile('votecount*')})
         n_records = len(records)
         self.log.info(f"Number of records: {n_records}")
 
         # Note this is larger than [records] because of extra h3 heading at footer
         h3 = page_content.find_all('h3')
 
-        postinfometa = self.page_content.find_all('span', {'class': 'postinfometa'})
-        postinfocats = self.page_content.find_all('span', {'class': 'postinfocats'})
-        abstract = self.page_content.find_all('div', {'class': 'post-content clearfix'})
+        postinfometa = page_content.find_all('span', {'class': 'postinfometa'})
+        postinfocats = page_content.find_all('span', {'class': 'postinfocats'})
+        abstract = page_content.find_all('div', {'class': 'post-content clearfix'})
 
         # Get VoxCharta links, titles
         records_dict = dict()
@@ -154,14 +152,14 @@ class Extract:
         self.log.info("finished ...")
         return records_dict
 
-    def export_data(self):
+    def export_data(self, records_dict):
         """Write JSON and csv files"""
 
         self.log.info("Exporting data files ...")
 
         self.log.info(f"Writing: {self.json_outfile}")
         with open(self.json_outfile, 'w') as outfile:
-            json.dump(self.records_dict, outfile)
+            json.dump(records_dict, outfile)
 
         df = pd.DataFrame.from_dict(records_dict, orient='index')
         self.log.info(f"Writing: {self.csv_outfile}")
