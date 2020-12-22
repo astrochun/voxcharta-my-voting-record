@@ -36,12 +36,13 @@ It requires `BeautifulSoup4` and `pandas`.
 
 ### Installation Instructions
 
-#### Python and setting up a environment
+#### Python and setting up an environment
 
-Using your preferred Python environment manager (`conda`, `venv`), you will
-will create a separate environment. Below are `conda` instructions
+Using your preferred Python environment manager (`conda`, `venv`), I recommend
+create a separate environment to avoid any possible conflicts with
+existing software that you used. Below are `conda` instructions
 
-```
+```:
 $ (sudo) conda create -n voxcharta python=3.9.1
 ```
 
@@ -63,15 +64,16 @@ $ (sudo) pip install voxcharta-my-voting-record
 
 The primary script to execute is [`vox_run`](bin/vox_run)
 
-Execution requires only one argument, which is the the full path
-to the HTML file. It can be provided with `-f` or `--filename`
+Execution requires only one argument, which is the full path
+to the HTML file. It can be provided with the `-f` or `--filename` 
+command-line flags.
 
 ```
 $ vox_run -f /full/path/to/myvotingrecords.htm
 ```
 
-All contents are stored in `/full/path/to`. Unless `--json_outfile` and
-`--csv_outfile` are provided, the output files are:
+All contents are stored in `/full/path/to`. Unless `-j`/`--json_outfile` and
+`-c`/`--csv_outfile` flags are provided, these are the output files are:
 
  - JSON: `/full/path/to/myvotingrecords.json`
  - CSV: `/full/path/to/myvotingrecords.csv`
