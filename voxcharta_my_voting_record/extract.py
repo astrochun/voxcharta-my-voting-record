@@ -1,5 +1,7 @@
 import re
 from bs4 import BeautifulSoup
+import json
+import pandas as pd
 
 
 def import_data(filename):
@@ -94,3 +96,20 @@ def get_records(page_content):
             })
 
     return records_dict
+
+
+def export_data(records_dict, json_outfile, csv_outfile):
+    """
+    Export JSON and csv content
+
+    :param records_dict: dict of records
+    :param json_outfile: str for JSON output file
+    :param csv_outfile: str for CSV output file
+    """
+
+    print(f"Writing: {json_outfile}")
+    json.dumps(records_dict, json_outfile)
+
+    df = pd.DataFrame.from_dict(records_dict, orient='index')
+    print(f"Writing: {csv_outfile}")
+    df.to_csv(csv_outfile)
