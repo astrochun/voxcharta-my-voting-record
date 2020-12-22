@@ -52,6 +52,7 @@ class Extract:
             content = f.read()
         f.close()
 
+        print("finished ...")
         return content
 
     def soup_it(self):
@@ -61,6 +62,7 @@ class Extract:
 
         page_content = BeautifulSoup(self.content, "html.parser")
 
+        print("finished ...")
         return page_content
 
     def get_records(self):
@@ -143,6 +145,7 @@ class Extract:
                     'comments': comments
                 })
 
+        print("finished ...")
         return records_dict
 
     def export_data(self):
@@ -157,3 +160,5 @@ class Extract:
         df = pd.DataFrame.from_dict(self.records_dict, orient='index')
         print(f"Writing: {self.csv_outfile}")
         df.to_csv(self.csv_outfile)
+
+        print("finished ...")
