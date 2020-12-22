@@ -47,6 +47,7 @@ class Extract:
     def import_data(filename):
         """Import data"""
 
+        print("Importing data ...")
         with open(filename, 'r') as f:
             content = f.read()
         f.close()
@@ -56,12 +57,16 @@ class Extract:
     def soup_it(self):
         """Construct BeautifulSoup data structure"""
 
+        print("BeautifulSoup-ing data ...")
+
         page_content = BeautifulSoup(self.content, "html.parser")
 
         return page_content
 
     def get_records(self):
         """Retrieve records"""
+
+        print("Retrieving records ...")
 
         records = self.page_content.find_all('span', {'id': re.compile('votecount*')})
         n_records = len(records)
@@ -142,6 +147,8 @@ class Extract:
 
     def export_data(self, json_outfile, csv_outfile):
         """Write JSON and csv files"""
+
+        print("Exporting data files ...")
 
         print(f"Writing: {json_outfile}")
         with open(json_outfile, 'w') as outfile:
