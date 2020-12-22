@@ -93,10 +93,12 @@ class Extract:
         # Get VoxCharta links, titles
         records_dict = dict()
 
-        for ii in range(len(records)):
+        for ii in range(n_records):
+            if ii % 50 == 0:
+                self.log.info(f"Working on {ii+1} of {n_records}")
             link = h3[ii].find('a')['href']
             title = h3[ii].find('a').text
-            self.log.info(f"{ii} : {title}")
+            self.log.debug(f"{ii+1:04d}: {title}")
 
             para = postinfometa[ii].find_all('p')
             n_para = len(para)
@@ -105,6 +107,16 @@ class Extract:
                 affil = postinfometa[ii].find_next('p', {'class': 'metafoot'}).text
             except AttributeError:
                 affil = ''  # No affiliation
+
+            arxiv_id = ''
+            categories = ''
+            abs_url = ''
+            pdf_url = ''
+            ps_url = ''
+            ads_url = ''
+            papers_url = ''
+            others_url = ''
+            comments = ''
 
             # This handles discussion cases
             if n_para > 3:
@@ -129,8 +141,6 @@ class Extract:
                 ads_url = urls[3]['href']
                 papers_url = urls[4]['href']
                 others_url = urls[5]['href']
-            else:
-                arxiv_id = ''
 
             records_dict[ii] = {
                 'arxiv_id': arxiv_id,
@@ -138,21 +148,16 @@ class Extract:
                 'title': title,
                 'authors': authors,
                 'affil': affil,
-                'abstract': abstract[ii].text.replace('\n', '')
+                'abstract': abstract[ii].text.replace('\n', ''),
+                'categories': categories,
+                'abs_url': abs_url,
+                'pdf_url': pdf_url,
+                'ps_url': ps_url,
+                'ads_url': ads_url,
+                'papers_url': papers_url,
+                'others_url': others_url,
+                'comments': comments
             }
-
-            # This handles discussion cases
-            if n_para > 3:
-                records_dict[ii].update({
-                    'categories': categories,
-                    'abs_url': abs_url,
-                    'pdf_url': pdf_url,
-                    'ps_url': ps_url,
-                    'ads_url': ads_url,
-                    'papers_url': papers_url,
-                    'others_url': others_url,
-                    'comments': comments
-                })
 
         self.log.info("Finished.")
         return records_dict
@@ -164,7 +169,7 @@ class Extract:
 
         self.log.info(f"Writing: {self.json_outfile}")
         with open(self.json_outfile, 'w') as outfile:
-            json.dump(records_dict, outfile)
+            json.dump(records_dict, outfile, indent=4)
 
         df = pd.DataFrame.from_dict(records_dict, orient='index')
         self.log.info(f"Writing: {self.csv_outfile}")
