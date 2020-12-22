@@ -114,9 +114,10 @@ class Extract:
                 papers_url = urls[4]['href']
                 others_url = urls[5]['href']
             else:
-                arxiv_id = f"no_id_{ii}"
+                arxiv_id = ''
 
-            records_dict[arxiv_id] = {
+            records_dict[ii] = {
+                'arxiv_id': arxiv_id,
                 'link': link,
                 'title': title,
                 'authors': authors,
