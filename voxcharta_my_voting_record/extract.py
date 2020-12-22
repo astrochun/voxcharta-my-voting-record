@@ -37,17 +37,18 @@ class Extract:
 
     def __init__(self, filename, json_outfile, csv_outfile):
 
-        self.content = self.import_data(filename)
-        self.page_content = self.soup_it()
-        self.records_dict = self.get_records()
-        self.export_data(json_outfile, csv_outfile)
+        self.filename = filename
+        self.json_outfile = json_outfile
+        self.csv_outfile = csv_outfile
 
-    @staticmethod
-    def import_data(filename):
+        self.content = self.import_data()
+
+    def import_data(self):
         """Import data"""
 
         print("Importing data ...")
-        with open(filename, 'r') as f:
+        print(f"Reading: {self.filename}")
+        with open(self.filename, 'r') as f:
             content = f.read()
         f.close()
 
@@ -144,15 +145,15 @@ class Extract:
 
         return records_dict
 
-    def export_data(self, json_outfile, csv_outfile):
+    def export_data(self):
         """Write JSON and csv files"""
 
         print("Exporting data files ...")
 
-        print(f"Writing: {json_outfile}")
-        with open(json_outfile, 'w') as outfile:
+        print(f"Writing: {self.json_outfile}")
+        with open(self.json_outfile, 'w') as outfile:
             json.dump(self.records_dict, outfile)
 
         df = pd.DataFrame.from_dict(self.records_dict, orient='index')
-        print(f"Writing: {csv_outfile}")
-        df.to_csv(csv_outfile)
+        print(f"Writing: {self.csv_outfile}")
+        df.to_csv(self.csv_outfile)
