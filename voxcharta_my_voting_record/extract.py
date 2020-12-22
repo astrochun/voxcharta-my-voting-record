@@ -18,8 +18,7 @@ class Extract:
     ----------
     content: str (from import_data)
     page_content: BeautifulSoup4 data structure object (from soup_it)
-    records_dict: dict containing records with keys in keys hierarchy
-                  (from get_records)
+    records_dict: dict (nested) containing records (from get_records)
 
     Methods
     -------
