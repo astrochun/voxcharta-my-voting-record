@@ -67,7 +67,8 @@ class Extract:
         """Construct BeautifulSoup data structure"""
 
         self.log.info("BeautifulSoup-ing data ...")
-
+        self.log.info("NOTE: This can take up to a few minutes ...")
+        self.log.info("Please be patient ...")
         page_content = BeautifulSoup(self.content, "html.parser")
 
         self.log.info("Finished.")
@@ -142,7 +143,7 @@ class Extract:
 
             # This handles discussion cases
             if n_para > 3:
-                records_dict[arxiv_id].update({
+                records_dict[ii].update({
                     'categories': categories,
                     'abs_url': abs_url,
                     'pdf_url': pdf_url,

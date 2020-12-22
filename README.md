@@ -4,6 +4,7 @@
 - [Getting Started](#getting-started)
     - [Requirements](#requirements)
     - [Installation Instructions](#installation-instructions)
+- [Execution](#execution)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -12,7 +13,7 @@
 
 ## Overview
 
-This Pure Python tool web scrapes data from [VoxCharta](https://voxcharta.org)'s
+This pure Python tool web scrapes data from [VoxCharta](https://voxcharta.org)'s
 [My Voting Records page](https://arizona.voxcharta.org/tools/my-voting-record/).
 It provides the data contents in two forms, a non-relational JSON file
 and relational CSV file.
@@ -29,7 +30,8 @@ These instructions will have the code running.
 ### Requirements
 
 This software is tested with Python 3.9.1, the latest version available when
-developed. It requires `BeautifulSoup4` and `pandas`
+developed. In principle it should work with >=3.7.
+It requires `BeautifulSoup4` and `pandas`.
 
 
 ### Installation Instructions
@@ -43,6 +45,38 @@ will create a separate environment. Below are `conda` instructions
 $ (sudo) conda create -n voxcharta python=3.9.1
 ```
 
+Installation is straightforward:
+```
+$ conda activate voxcharta
+$ git clone https://github.com/astrochun/voxcharta-my-voting-record.git
+$ cd voxcharta-my-voting-record
+$ (sudo) python setup.py install
+```
+
+When this is "PyPi"-ed:
+```
+$ conda activate voxcharta
+$ (sudo) pip install voxcharta-my-voting-record
+```
+
+## Execution
+
+The primary script to execute is [`vox_run`](bin/vox_run)
+
+Execution requires only one argument, `filename`, which is the the full path
+to the HTML file.
+
+```
+$ vox_run --filename /full/path/to/myvotingrecords.htm
+```
+
+All contents are stored in `/full/path/to`. Unless `--json_outfile` and
+`--csv_outfile` are provided, the output files are:
+
+ - JSON: `/full/path/to/myvotingrecords.json`
+ - CSV: `/full/path/to/myvotingrecords.csv`
+
+A log file is constructed: `/full/path/too/vox_run.YYYY-MM-DD.log`
 
 ## Versioning
 
