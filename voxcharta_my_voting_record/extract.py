@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import json
 import pandas as pd
 
+from .logger import log_stdout
+
 
 class Extract:
     """
@@ -35,8 +37,12 @@ class Extract:
       Write JSON and csv files
     """
 
-    def __init__(self, filename, json_outfile, csv_outfile):
+    def __init__(self, filename, json_outfile, csv_outfile, log=None):
 
+        if log is None:
+            log = log_stdout()
+
+        self.log = log
         self.filename = filename
         self.json_outfile = json_outfile
         self.csv_outfile = csv_outfile
@@ -46,36 +52,36 @@ class Extract:
     def import_data(self):
         """Import data"""
 
-        print("Importing data ...")
-        print(f"Reading: {self.filename}")
+        self.log.info("Importing data ...")
+        self.log.info(f"Reading: {self.filename}")
         with open(self.filename, 'r') as f:
             content = f.read()
         f.close()
 
-        print("finished ...")
+        self.log.info("finished ...")
         return content
 
     def soup_it(self):
         """Construct BeautifulSoup data structure"""
 
-        print("BeautifulSoup-ing data ...")
+        self.log.info("BeautifulSoup-ing data ...")
 
         page_content = BeautifulSoup(self.content, "html.parser")
 
-        print("finished ...")
+        self.log.info("finished ...")
         return page_content
 
     def get_records(self):
         """Retrieve records"""
 
-        print("Retrieving records ...")
+        self.log.info("Retrieving records ...")
 
         records = self.page_content.find_all('span', {'id': re.compile('votecount*')})
         n_records = len(records)
-        print(f"Number of records: {n_records}")
+        self.log.info(f"Number of records: {n_records}")
 
         # Note this is larger than [records] because of extra h3 heading at footer
-        h3 = self.page_content.find_all('h3')
+        h3 = page_content.find_all('h3')
 
         postinfometa = self.page_content.find_all('span', {'class': 'postinfometa'})
         postinfocats = self.page_content.find_all('span', {'class': 'postinfocats'})
@@ -87,7 +93,7 @@ class Extract:
         for ii in range(len(records)):
             link = h3[ii].find('a')['href']
             title = h3[ii].find('a').text
-            print(f"{ii} : {title}")
+            self.log.info(f"{ii} : {title}")
 
             para = postinfometa[ii].find_all('p')
             n_para = len(para)
@@ -145,20 +151,20 @@ class Extract:
                     'comments': comments
                 })
 
-        print("finished ...")
+        self.log.info("finished ...")
         return records_dict
 
     def export_data(self):
         """Write JSON and csv files"""
 
-        print("Exporting data files ...")
+        self.log.info("Exporting data files ...")
 
-        print(f"Writing: {self.json_outfile}")
+        self.log.info(f"Writing: {self.json_outfile}")
         with open(self.json_outfile, 'w') as outfile:
             json.dump(self.records_dict, outfile)
 
-        df = pd.DataFrame.from_dict(self.records_dict, orient='index')
-        print(f"Writing: {self.csv_outfile}")
+        df = pd.DataFrame.from_dict(records_dict, orient='index')
+        self.log.info(f"Writing: {self.csv_outfile}")
         df.to_csv(self.csv_outfile)
 
-        print("finished ...")
+        self.log.info("finished ...")
