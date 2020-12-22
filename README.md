@@ -4,6 +4,7 @@
 - [Getting Started](#getting-started)
     - [Requirements](#requirements)
     - [Installation Instructions](#installation-instructions)
+- [VoxCharta Data Export](#voxcharta-data-export)
 - [Execution](#execution)
 - [Versioning](#versioning)
 - [Authors](#authors)
@@ -59,6 +60,17 @@ When this is "PyPi"-ed:
 $ conda activate voxcharta
 $ (sudo) pip install voxcharta-my-voting-record
 ```
+
+## VoxCharta Data Export
+
+Before using this software, you will want to export your VoxCharta My Voting Records
+page. Here are the steps. These are based on Chrome, so differences may occur:
+
+1. [Login to VoxCharta](https://voxcharta.org/wp-login.php) before you can't!
+2. Click on "Tools > My Voting Records"
+3. After the page fully loads (this can take some time), click "File > Save Page As"
+4. Change filename to "myvotingrecords"
+5. For format, select "Webpage, Complete"
 
 ## Execution
 
