@@ -15,6 +15,7 @@ class Extract:
     :param filename: str. Full path to MHTML
     :param json_outfile: str for JSON output file
     :param csv_outfile: str for CSV output file
+    :param log: LogClass or logging object. Default uses log_stdout()
 
     Attributes
     ----------
