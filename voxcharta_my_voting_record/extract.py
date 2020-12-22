@@ -169,7 +169,7 @@ class Extract:
 
         self.log.info(f"Writing: {self.json_outfile}")
         with open(self.json_outfile, 'w') as outfile:
-            json.dump(records_dict, outfile)
+            json.dump(records_dict, outfile, indent=4)
 
         df = pd.DataFrame.from_dict(records_dict, orient='index')
         self.log.info(f"Writing: {self.csv_outfile}")
