@@ -67,7 +67,8 @@ class Extract:
         """Construct BeautifulSoup data structure"""
 
         self.log.info("BeautifulSoup-ing data ...")
-
+        self.log.info("NOTE: This can take up to a few minutes ...")
+        self.log.info("Please be patient ...")
         page_content = BeautifulSoup(self.content, "html.parser")
 
         self.log.info("Finished.")
