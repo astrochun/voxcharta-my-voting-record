@@ -45,6 +45,6 @@ if __name__ == '__main__':
     records_dict = vox_extract.get_records(soup)
 
     # Write files
-    vox_extract.export_data()
+    vox_extract.export_data(records_dict)
 
     log.info("Script completed!")
