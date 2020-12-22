@@ -93,10 +93,12 @@ class Extract:
         # Get VoxCharta links, titles
         records_dict = dict()
 
-        for ii in range(len(records)):
+        for ii in range(n_records):
+            if ii % 50 == 0:
+                self.log.info(f"Working on {ii+1} of {n_records}")
             link = h3[ii].find('a')['href']
             title = h3[ii].find('a').text
-            self.log.info(f"{ii} : {title}")
+            self.log.debug(f"{ii+1:04d}: {title}")
 
             para = postinfometa[ii].find_all('p')
             n_para = len(para)
