@@ -12,7 +12,7 @@
 
 ## Overview
 
-This Pure Python tool web scrapes data from [VoxCharta](https://voxcharta.org)'s
+This pure Python tool web scrapes data from [VoxCharta](https://voxcharta.org)'s
 [My Voting Records page](https://arizona.voxcharta.org/tools/my-voting-record/).
 It provides the data contents in two forms, a non-relational JSON file
 and relational CSV file.
@@ -29,7 +29,8 @@ These instructions will have the code running.
 ### Requirements
 
 This software is tested with Python 3.9.1, the latest version available when
-developed. It requires `BeautifulSoup4` and `pandas`
+developed. In principle it should work with >=3.7.
+It requires `BeautifulSoup4` and `pandas`.
 
 
 ### Installation Instructions
@@ -41,6 +42,20 @@ will create a separate environment. Below are `conda` instructions
 
 ```
 $ (sudo) conda create -n voxcharta python=3.9.1
+```
+
+Installation is straightforward:
+```
+$ conda activate voxcharta
+$ git clone https://github.com/astrochun/voxcharta-my-voting-record.git
+$ cd voxcharta-my-voting-record
+$ (sudo) python setup.py install
+```
+
+When this is "PyPi"-ed:
+```
+$ conda activate voxcharta
+$ (sudo) pip install voxcharta-my-voting-record
 ```
 
 
