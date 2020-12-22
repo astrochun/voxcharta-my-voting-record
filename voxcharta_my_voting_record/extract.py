@@ -46,7 +46,10 @@ class Extract:
         self.json_outfile = json_outfile
         self.csv_outfile = csv_outfile
 
+        self.log.info("Initializing ...")
         self.content = self.import_data()
+
+        self.log.info("initialization complete")
 
     def import_data(self):
         """Import data"""
@@ -57,7 +60,7 @@ class Extract:
             content = f.read()
         f.close()
 
-        self.log.info("finished ...")
+        self.log.info("Finished.")
         return content
 
     def soup_it(self):
@@ -67,7 +70,7 @@ class Extract:
 
         page_content = BeautifulSoup(self.content, "html.parser")
 
-        self.log.info("finished ...")
+        self.log.info("Finished.")
         return page_content
 
     def get_records(self, page_content):
@@ -150,7 +153,7 @@ class Extract:
                     'comments': comments
                 })
 
-        self.log.info("finished ...")
+        self.log.info("Finished.")
         return records_dict
 
     def export_data(self, records_dict):
@@ -166,4 +169,4 @@ class Extract:
         self.log.info(f"Writing: {self.csv_outfile}")
         df.to_csv(self.csv_outfile)
 
-        self.log.info("finished ...")
+        self.log.info("Finished.")
