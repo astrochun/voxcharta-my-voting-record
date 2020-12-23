@@ -178,8 +178,8 @@ class Extract:
         # Write arxiv_id list
         arxiv_outfile = self.csv_outfile.replace('.csv', '_arxiv.txt')
         self.log.info(f"Writing: {arxiv_outfile}")
-        df[df['arxiv_id'].notna()].to_csv(arxiv_outfile, index=False,
-                                          header=False,
-                                          columns=['arxiv_id'])
+        clean_df = df.loc[(df['arxiv_id'] != '') & (df['arxiv_id'].notna())]
+        clean_df.to_csv(arxiv_outfile, index=False, header=False,
+                        columns=['arxiv_id'])
 
         self.log.info("Finished.")
