@@ -95,10 +95,10 @@ class Extract:
 
         for ii in range(n_records):
             if ii % 50 == 0:
-                self.log.info(f"Working on {ii+1} of {n_records}")
+                self.log.info(f"Working on {ii + 1} of {n_records}")
             link = h3[ii].find('a')['href']
             title = h3[ii].find('a').text
-            self.log.debug(f"{ii+1:04d}: {title}")
+            self.log.debug(f"{ii + 1:04d}: {title}")
 
             para = postinfometa[ii].find_all('p')
             n_para = len(para)
@@ -173,6 +173,13 @@ class Extract:
 
         df = pd.DataFrame.from_dict(records_dict, orient='index')
         self.log.info(f"Writing: {self.csv_outfile}")
-        df.to_csv(self.csv_outfile)
+        df.to_csv(self.csv_outfile, index=False)
+
+        # Write arxiv_id list
+        arxiv_outfile = self.csv_outfile.replace('.csv', '_arxiv.txt')
+        self.log.info(f"Writing: {arxiv_outfile}")
+        df[df['arxiv_id'].notna()].to_csv(arxiv_outfile, index=False,
+                                          header=False,
+                                          columns=['arxiv_id'])
 
         self.log.info("Finished.")
