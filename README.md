@@ -106,7 +106,7 @@ see the [releases on this repository](https://github.com/astrochun/voxcharta-my-
 
 ## Authors
 
-* Chun Ly, Ph.D. ([@astrochun](http://www.github.com/astrochun)) - [University of Arizona Libraries](https://github.com/ualibraries), [Office of Digital Innovation and Stewardship](https://github.com/UAL-ODIS)
+* Chun Ly, Ph.D. ([@astrochun](http://www.github.com/astrochun))
 
 
 ## License
