@@ -8,7 +8,7 @@
 - [Getting Started](#getting-started)
     - [Requirements](#requirements)
     - [Installation Instructions](#installation-instructions)
-- [VoxCharta Data Export](#voxcharta-data-export)
+- [Vox Charta Data Export](#vox-charta-data-export)
 - [Execution](#execution)
 - [Versioning](#versioning)
 - [Authors](#authors)
@@ -18,12 +18,12 @@
 
 ## Overview
 
-This pure Python tool web scrapes data from [VoxCharta](https://voxcharta.org)'s
-[My Voting Records page](https://arizona.voxcharta.org/tools/my-voting-record/).
+This pure Python tool web scrapes data from [Vox Charta](https://voxcharta.org)'s
+[My Voting Records page](https://voxcharta.org/tools/my-voting-record/).
 It provides the data contents in two forms, a non-relational JSON file
 and relational CSV file.
 
-This software was driven by the need to archive such records since VoxCharta
+This software was driven by the need to archive such records since Vox Charta
 will be sunsetted on December 31, 2020.
 
 
@@ -67,12 +67,12 @@ $ cd voxcharta-my-voting-record
 $ (sudo) python setup.py install
 ```
 
-## VoxCharta Data Export
+## Vox Charta Data Export
 
-Before using this software, you will want to export your VoxCharta My Voting Records
+Before using this software, you will want to export your Vox Charta My Voting Records
 page. Here are the steps. These are based on Chrome, so differences may occur:
 
-1. [Login to VoxCharta](https://voxcharta.org/wp-login.php) before you can't!
+1. [Login to Vox Charta](https://voxcharta.org/wp-login.php) before you can't!
 2. Click on "Tools > My Voting Records"
 3. After the page fully loads (this can take some time), click "File > Save Page As"
 4. Change filename to "myvotingrecords"
