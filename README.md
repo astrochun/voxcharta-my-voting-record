@@ -43,8 +43,8 @@ It requires `BeautifulSoup4` and `pandas`.
 
 #### Python and setting up an environment
 
-Using your preferred Python environment manager (`conda`, `venv`), I recommend
-create a separate environment to avoid any possible conflicts with
+Using your preferred Python environment manager (`conda`, `virtualenv`, `venv`),
+I recommend create a separate environment to avoid any possible conflicts with
 existing software that you used. Below are `conda` instructions
 
 ```:
@@ -52,17 +52,19 @@ $ (sudo) conda create -n voxcharta python=3.9.1
 ```
 
 Installation is straightforward:
+
+```
+$ conda activate voxcharta
+$ (sudo) pip install voxcharta-my-voting-record
+```
+
+Or from source:
+
 ```
 $ conda activate voxcharta
 $ git clone https://github.com/astrochun/voxcharta-my-voting-record.git
 $ cd voxcharta-my-voting-record
 $ (sudo) python setup.py install
-```
-
-When this is "PyPi"-ed:
-```
-$ conda activate voxcharta
-$ (sudo) pip install voxcharta-my-voting-record
 ```
 
 ## VoxCharta Data Export
