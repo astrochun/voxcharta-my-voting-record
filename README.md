@@ -1,14 +1,17 @@
 # voxcharta-my-voting-record
 
-![GitHub top language](https://img.shields.io/github/languages/top/astrochun/voxcharta-my-voting-record)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/astrochun/voxcharta-my-voting-record)
-![GitHub](https://img.shields.io/github/license/astrochun/voxcharta-my-voting-record?color=blue)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/voxcharta-my-voting-record)
+![PyPI](https://img.shields.io/pypi/v/voxcharta-my-voting-record?color=blue)
+![License](https://img.shields.io/github/license/astrochun/voxcharta-my-voting-record?color=blue)
+
+![PyPI - Downloads](https://img.shields.io/pypi/dm/voxcharta-my-voting-record?color=light%20green&label=pypi-download&style=flat-square)
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2Fastrochun%2Fvoxcharta-my-voting-record)
 
 - [Overview](#overview)
 - [Getting Started](#getting-started)
     - [Requirements](#requirements)
     - [Installation Instructions](#installation-instructions)
-- [VoxCharta Data Export](#voxcharta-data-export)
+- [Vox Charta Data Export](#vox-charta-data-export)
 - [Execution](#execution)
 - [Versioning](#versioning)
 - [Authors](#authors)
@@ -18,12 +21,12 @@
 
 ## Overview
 
-This pure Python tool web scrapes data from [VoxCharta](https://voxcharta.org)'s
-[My Voting Records page](https://arizona.voxcharta.org/tools/my-voting-record/).
+This pure Python tool web scrapes data from [Vox Charta](https://voxcharta.org)'s
+[My Voting Records page](https://voxcharta.org/tools/my-voting-record/).
 It provides the data contents in two forms, a non-relational JSON file
 and relational CSV file.
 
-This software was driven by the need to archive such records since VoxCharta
+This software was driven by the need to archive such records since Vox Charta
 will be sunsetted on December 31, 2020.
 
 
@@ -43,8 +46,8 @@ It requires `BeautifulSoup4` and `pandas`.
 
 #### Python and setting up an environment
 
-Using your preferred Python environment manager (`conda`, `venv`), I recommend
-create a separate environment to avoid any possible conflicts with
+Using your preferred Python environment manager (`conda`, `virtualenv`, `venv`),
+I recommend create a separate environment to avoid any possible conflicts with
 existing software that you used. Below are `conda` instructions
 
 ```:
@@ -52,6 +55,14 @@ $ (sudo) conda create -n voxcharta python=3.9.1
 ```
 
 Installation is straightforward:
+
+```
+$ conda activate voxcharta
+$ (sudo) pip install voxcharta-my-voting-record
+```
+
+Or from source:
+
 ```
 $ conda activate voxcharta
 $ git clone https://github.com/astrochun/voxcharta-my-voting-record.git
@@ -59,18 +70,12 @@ $ cd voxcharta-my-voting-record
 $ (sudo) python setup.py install
 ```
 
-When this is "PyPi"-ed:
-```
-$ conda activate voxcharta
-$ (sudo) pip install voxcharta-my-voting-record
-```
+## Vox Charta Data Export
 
-## VoxCharta Data Export
-
-Before using this software, you will want to export your VoxCharta My Voting Records
+Before using this software, you will want to export your Vox Charta My Voting Records
 page. Here are the steps. These are based on Chrome, so differences may occur:
 
-1. [Login to VoxCharta](https://voxcharta.org/wp-login.php) before you can't!
+1. [Login to Vox Charta](https://voxcharta.org/wp-login.php) before you can't!
 2. Click on "Tools > My Voting Records"
 3. After the page fully loads (this can take some time), click "File > Save Page As"
 4. Change filename to "myvotingrecords"
@@ -104,7 +109,7 @@ see the [releases on this repository](https://github.com/astrochun/voxcharta-my-
 
 ## Authors
 
-* Chun Ly, Ph.D. ([@astrochun](http://www.github.com/astrochun)) - [University of Arizona Libraries](https://github.com/ualibraries), [Office of Digital Innovation and Stewardship](https://github.com/UAL-ODIS)
+* Chun Ly, Ph.D. ([@astrochun](http://www.github.com/astrochun))
 
 
 ## License
