@@ -1,7 +1,9 @@
 import re
 from bs4 import BeautifulSoup
 import json
+
 import pandas as pd
+import typer
 
 from .logger import log_stdout
 
@@ -13,8 +15,7 @@ class Extract:
       write JSON and CSV files:
 
     :param filename: str. Full path to MHTML
-    :param json_outfile: str for JSON output file
-    :param csv_outfile: str for CSV output file
+    :param out_prefix: Full path and prefix of output JSON/CSV files
     :param log: LogClass or logging object. Default uses log_stdout()
 
     Attributes
@@ -36,15 +37,15 @@ class Extract:
       Write JSON and csv files
     """
 
-    def __init__(self, filename, json_outfile, csv_outfile, log=None):
+    def __init__(self, filename, out_prefix, log=None):
 
         if log is None:
             log = log_stdout()
 
         self.log = log
         self.filename = filename
-        self.json_outfile = json_outfile
-        self.csv_outfile = csv_outfile
+        self.json_outfile = f"{out_prefix}.json"
+        self.csv_outfile = f"{out_prefix}.csv"
 
         self.log.info("Initializing ...")
         self.content = self.import_data()
@@ -93,71 +94,70 @@ class Extract:
         # Get VoxCharta links, titles
         records_dict = dict()
 
-        for ii in range(n_records):
-            if ii % 50 == 0:
-                self.log.info(f"Working on {ii + 1} of {n_records}")
-            link = h3[ii].find('a')['href']
-            title = h3[ii].find('a').text
-            self.log.debug(f"{ii + 1:04d}: {title}")
+        with typer.progressbar(range(n_records), label="Processing") as progress:
+            for ii in progress:
+                link = h3[ii].find('a')['href']
+                title = h3[ii].find('a').text
+                self.log.debug(f"{ii + 1:04d}: {title}")
 
-            para = postinfometa[ii].find_all('p')
-            n_para = len(para)
-            authors = para[0].text
-            try:
-                affil = postinfometa[ii].find_next('p', {'class': 'metafoot'}).text
-            except AttributeError:
-                affil = ''  # No affiliation
+                para = postinfometa[ii].find_all('p')
+                n_para = len(para)
+                authors = para[0].text
+                try:
+                    affil = postinfometa[ii].find_next('p', {'class': 'metafoot'}).text
+                except AttributeError:
+                    affil = ''  # No affiliation
 
-            arxiv_id = ''
-            categories = ''
-            abs_url = ''
-            pdf_url = ''
-            ps_url = ''
-            ads_url = ''
-            papers_url = ''
-            others_url = ''
-            comments = ''
+                arxiv_id = ''
+                categories = ''
+                abs_url = ''
+                pdf_url = ''
+                ps_url = ''
+                ads_url = ''
+                papers_url = ''
+                others_url = ''
+                comments = ''
 
-            # This handles discussion cases
-            if n_para > 3:
-                # This handles footnote for "Listed affiliation ..."
-                if 'Listed affiliation' in para[2].text:
-                    arxiv = para[4]
-                    comments = para[5].text
-                else:
-                    arxiv = para[3]
-                    comments = para[4].text
-                arxiv_id = arxiv.find('a').text
+                # This handles discussion cases
+                if n_para > 3:
+                    # This handles footnote for "Listed affiliation ..."
+                    if 'Listed affiliation' in para[2].text:
+                        arxiv = para[4]
+                        comments = para[5].text
+                    else:
+                        arxiv = para[3]
+                        comments = para[4].text
+                    arxiv_id = arxiv.find('a').text
 
-                # get instruments
-                postinfocats[ii].text.split('\n')
-                categories_list = [val.replace(' ', '') for
-                                   val in postinfocats[2].text.split('\n') if val]
-                categories = ';'.join(categories_list)
-                urls = arxiv.find_all('a')
-                abs_url = urls[0]['href']
-                pdf_url = urls[1]['href']
-                ps_url = urls[2]['href']
-                ads_url = urls[3]['href']
-                papers_url = urls[4]['href']
-                others_url = urls[5]['href']
+                    # get instruments
+                    postinfocats[ii].text.split('\n')
+                    categories_list = [val.replace(' ', '') for
+                                       val in postinfocats[2].text.split('\n') if val]
+                    categories = ';'.join(categories_list)
+                    urls = arxiv.find_all('a')
+                    abs_url = urls[0]['href']
+                    pdf_url = urls[1]['href']
+                    ps_url = urls[2]['href']
+                    ads_url = urls[3]['href']
+                    papers_url = urls[4]['href']
+                    others_url = urls[5]['href']
 
-            records_dict[ii] = {
-                'arxiv_id': arxiv_id,
-                'link': link,
-                'title': title,
-                'authors': authors,
-                'affil': affil,
-                'abstract': abstract[ii].text.replace('\n', ''),
-                'categories': categories,
-                'abs_url': abs_url,
-                'pdf_url': pdf_url,
-                'ps_url': ps_url,
-                'ads_url': ads_url,
-                'papers_url': papers_url,
-                'others_url': others_url,
-                'comments': comments
-            }
+                records_dict[ii] = {
+                    'arxiv_id': arxiv_id,
+                    'link': link,
+                    'title': title,
+                    'authors': authors,
+                    'affil': affil,
+                    'abstract': abstract[ii].text.replace('\n', ''),
+                    'categories': categories,
+                    'abs_url': abs_url,
+                    'pdf_url': pdf_url,
+                    'ps_url': ps_url,
+                    'ads_url': ads_url,
+                    'papers_url': papers_url,
+                    'others_url': others_url,
+                    'comments': comments
+                }
 
         self.log.info("Finished.")
         return records_dict
