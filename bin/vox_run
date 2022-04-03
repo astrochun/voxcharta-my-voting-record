@@ -6,19 +6,20 @@ from typing import Optional
 import typer
 
 from voxcharta_my_voting_record.logger import LogClass
-from voxcharta_my_voting_record import extract
-from voxcharta_my_voting_record import __version__
+from voxcharta_my_voting_record import extract, __version__
 
 today = date.today()
 
-help1 = 'Full path of VoxCharta My Voting Record HTML'
-help2 = 'Full path and prefix of output JSON/CSV files'
+help1 = "Full path of VoxCharta My Voting Record HTML"
+help2 = "Full path and prefix of output JSON/CSV files"
 
 
-def main(filename: str = typer.Argument(..., help=help1, metavar='filename'),
-         out_prefix: Optional[str] = typer.Argument(None, help=help2,
-                                                    metavar='out_prefix')
-         ):
+def main(
+    filename: str = typer.Argument(..., help=help1, metavar="filename"),
+    out_prefix: Optional[str] = typer.Argument(
+        None, help=help2, metavar="out_prefix"
+    ),
+):
     """
     Process VoxCharta voting records that are provided in HTML
 
@@ -36,7 +37,7 @@ def main(filename: str = typer.Argument(..., help=help1, metavar='filename'),
     log.info(f"Logs are stored in : {log_outfile}")
 
     if not out_prefix:
-        out_prefix = p.with_suffix('')
+        out_prefix = p.with_suffix("")
 
     vox_extract = extract.Extract(filename, out_prefix, log=log)
 
@@ -53,5 +54,5 @@ def main(filename: str = typer.Argument(..., help=help1, metavar='filename'),
     log.info("*****************")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     typer.run(main)
