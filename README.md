@@ -3,6 +3,7 @@
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/voxcharta-my-voting-record)
 ![PyPI](https://img.shields.io/pypi/v/voxcharta-my-voting-record?color=blue)
 ![License](https://img.shields.io/github/license/astrochun/voxcharta-my-voting-record?color=blue)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/voxcharta-my-voting-record?color=light%20green&label=pypi-download&style=flat-square)
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2Fastrochun%2Fvoxcharta-my-voting-record)
@@ -86,7 +87,7 @@ page. Here are the steps. These are based on Chrome, so differences may occur:
 The primary script to execute is [`vox_run`](bin/vox_run)
 
 Execution requires only one argument, which is the full path
-to the HTML file. It can be provided with the `-f` or `--filename` 
+to the HTML file. It can be provided with the `-f` or `--filename`
 command-line flags.
 
 ```

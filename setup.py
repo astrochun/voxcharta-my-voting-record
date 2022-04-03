@@ -7,25 +7,25 @@ with open("requirements.txt", "r") as fr:
     requirements = fr.read().splitlines()
 
 setup(
-    name='voxcharta-my-voting-record',
-    version='0.3.0',
-    packages=['voxcharta_my_voting_record'],
-    scripts=['bin/vox_run'],
-    url='https://github.com/astrochun/voxcharta-my-voting-record',
-    license='GNU GPLv3',
-    author='Chun Ly',
-    author_email='astro.chun@gmail.com',
-    description='A Python tool to extract information from VoxCharta My Voting Records HTML',
+    name="voxcharta-my-voting-record",
+    version="0.3.1",
+    packages=["voxcharta_my_voting_record"],
+    scripts=["bin/vox_run"],
+    url="https://github.com/astrochun/voxcharta-my-voting-record",
+    license="GNU GPLv3",
+    author="Chun Ly",
+    author_email="astro.chun@gmail.com",
+    description="A Python tool to extract information from VoxCharta My Voting Records HTML",
     long_description=long_description,
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     install_requires=requirements,
-    python_requires='>=3.7',
+    python_requires=">=3.7",
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: 3.10'
-    ]
+        "Development Status :: 4 - Beta",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+    ],
 )
