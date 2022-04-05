@@ -8,14 +8,14 @@ with open("requirements.txt", "r") as fr:
 
 setup(
     name="voxcharta-my-voting-record",
-    version="0.3.1",
+    version="0.3.2",
     packages=["voxcharta_my_voting_record"],
     scripts=["bin/vox_run"],
     url="https://github.com/astrochun/voxcharta-my-voting-record",
     license="GNU GPLv3",
     author="Chun Ly",
     author_email="astro.chun@gmail.com",
-    description="A Python tool to extract information from VoxCharta My Voting Records HTML",
+    description="A Python tool to extract information from VoxCharta My Voting Records HTML",  # noqa: E501
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=requirements,
