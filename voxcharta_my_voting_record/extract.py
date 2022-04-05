@@ -86,7 +86,7 @@ class Extract:
         n_records = len(records)
         self.log.info(f"Number of records: {n_records}")
 
-        # Note this is larger than [records] because of extra h3 heading at footer
+        # Note: larger than [records] because of extra h3 heading at footer
         h3 = page_content.find_all("h3")
 
         postinfometa = page_content.find_all("span", {"class": "postinfometa"})
