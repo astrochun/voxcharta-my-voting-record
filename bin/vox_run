@@ -31,8 +31,7 @@ def main(
     log_outfile = p.parent / f"vox_run.{today.strftime('%Y-%m-%d')}.log"
     log = LogClass(log_outfile).get_logger()
 
-    log.info("********************")
-    log.info("Starting vox_run ...")
+    log.info("[italic yellow]Starting vox_run ...")
     log.info(f"Version: {__version__}")
     log.info(f"Logs are stored in : {log_outfile}")
 
@@ -50,8 +49,7 @@ def main(
     # Write files
     vox_extract.export_data(records_dict)
 
-    log.info("Finished vox_run!")
-    log.info("*****************")
+    log.info("[bold dark_green]:heavy_check_mark: Finished vox_run!")
 
 
 if __name__ == "__main__":

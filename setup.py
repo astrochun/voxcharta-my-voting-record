@@ -8,7 +8,7 @@ with open("requirements.txt", "r") as fr:
 
 setup(
     name="voxcharta-my-voting-record",
-    version="0.3.2",
+    version="0.4.0",
     packages=["voxcharta_my_voting_record"],
     scripts=["bin/vox_run"],
     url="https://github.com/astrochun/voxcharta-my-voting-record",

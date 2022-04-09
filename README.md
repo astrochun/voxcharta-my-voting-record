@@ -87,20 +87,23 @@ page. Here are the steps. These are based on Chrome, so differences may occur:
 The primary script to execute is [`vox_run`](bin/vox_run)
 
 Execution requires only one argument, which is the full path
-to the HTML file. It can be provided with the `-f` or `--filename`
-command-line flags.
+to the HTML file.
 
 ```
-$ vox_run -f /full/path/to/myvotingrecords.htm
+$ vox_run /full/path/to/myvotingrecords.htm
 ```
 
-All contents are stored in `/full/path/to`. Unless `-j`/`--json_outfile` and
-`-c`/`--csv_outfile` flags are provided, these are the output files are:
+This is all possible using [`Typer`](https://typer.tiangolo.com/).
+The script provides rich-formatted log messages to the terminal using [`Rich`](https://rich.readthedocs.io/).
+
+All contents are stored in `/full/path/to` unless `outfile_prefix` is specified
+with a different path. Thus, without specifying `outfile_prefix` the above execution
+will generate:
 
  - JSON: `/full/path/to/myvotingrecords.json`
  - CSV: `/full/path/to/myvotingrecords.csv`
 
-A log file is constructed: `/full/path/too/vox_run.YYYY-MM-DD.log`
+A log file is constructed: `/full/path/to/vox_run.YYYY-MM-DD.log`
 
 ## Versioning
 
