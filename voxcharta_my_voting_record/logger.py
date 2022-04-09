@@ -1,14 +1,11 @@
-import sys
-from os.path import join
-
 import logging
+from pathlib import Path
 
-formatter = logging.Formatter(
-    "%(asctime)s - %(levelname)8s: %(message)s", "%H:%M:%S"
-)
-file_formatter = logging.Formatter(
-    "%(asctime)s %(levelname)8s - %(module)10s %(funcName)15s : %(message)s",
-    "%H:%M:%S",
+from rich.console import Console
+from rich.logging import RichHandler
+
+sh = RichHandler(
+    level=logging.INFO, markup=True, log_time_format="[%X]", show_path=False
 )
 
 
@@ -29,39 +26,38 @@ class LogClass:
       logfile: Filename for exported log file
     """
 
-    def __init__(self, logfile):
-        self.LOG_FILENAME = join(logfile)
+    def __init__(self, logfile: Path):
+        self.LOG_FILENAME = logfile
 
     def get_logger(self):
-        file_log_level = logging.DEBUG  # This is for file logging
         log = logging.getLogger("main_logger")
+        log.setLevel(logging.DEBUG)
         if not log.handlers:
-            log.setLevel(file_log_level)
-
-            sh = logging.StreamHandler(sys.stdout)
-            sh.setLevel(logging.INFO)  # Only at INFO level
-            sh.setFormatter(formatter)
             log.addHandler(sh)
 
-            fh = logging.FileHandler(self.LOG_FILENAME)
-            fh.setLevel(file_log_level)
-            fh.setFormatter(file_formatter)
-            log.addHandler(fh)
+            console = get_console(self.LOG_FILENAME)
 
-            log.handler_set = True
-            log.propagate = False
+            fh = RichHandler(
+                console=console,
+                level=logging.DEBUG,
+                log_time_format="[%X]",
+                markup=True,
+            )
+            log.addHandler(fh)
         return log
 
 
-def log_stdout():
-    log_level = logging.INFO
-    log = logging.getLogger("stdout_logger")
-    if not log.handlers:
-        log.setLevel(log_level)
-        sh = logging.StreamHandler(sys.stdout)
-        sh.setFormatter(formatter)
-        log.addHandler(sh)
+def get_console(filename: Path) -> Console:
+    return Console(
+        force_terminal=False, file=open(filename, "w"), log_time=True
+    )
 
+
+def log_stdout():
+    log = logging.getLogger("stdout_logger")
+    log.setLevel(logging.DEBUG)
+    if not log.handlers:
+        log.addHandler(sh)
         log.handler_set = True
         log.propagate = False
     return log
