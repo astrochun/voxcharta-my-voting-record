@@ -38,9 +38,8 @@ These instructions will have the code running.
 
 ### Requirements
 
-This software is tested with Python 3.9.1, the latest version available when
-developed. In principle it should work with >=3.7.
-It requires `BeautifulSoup4` and `pandas`.
+This software is tested with 3.10.2, the latest version available during recent development.
+In principle it should work with >=3.7.  It requires `BeautifulSoup4` and `pandas`.
 
 
 ### Installation Instructions
@@ -52,7 +51,7 @@ I recommend create a separate environment to avoid any possible conflicts with
 existing software that you used. Below are `conda` instructions
 
 ```:
-$ (sudo) conda create -n voxcharta python=3.9.1
+$ (sudo) conda create -n voxcharta python=3.10.2
 ```
 
 Installation is straightforward:
@@ -68,13 +67,16 @@ Or from source:
 $ conda activate voxcharta
 $ git clone https://github.com/astrochun/voxcharta-my-voting-record.git
 $ cd voxcharta-my-voting-record
-$ (sudo) python setup.py install
+$ (sudo) pip install .
 ```
+
+For editable/development installation, execute `(sudo) pip install -e .`
+This is preferred over the `python setup.py` method as certain dependencies (`numpy`) will fail to install during the build process.
 
 ## Vox Charta Data Export
 
 Before using this software, you will want to export your Vox Charta My Voting Records
-page. Here are the steps. These are based on Chrome, so differences may occur:
+page. Here are the steps. These are based on Chrome, so differences may occur for other browsers:
 
 1. [Login to Vox Charta](https://voxcharta.org/wp-login.php) before you can't!
 2. Click on "Tools > My Voting Records"
